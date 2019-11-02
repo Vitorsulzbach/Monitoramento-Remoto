@@ -43,14 +43,11 @@ def index(request):
 		a.x22=request.POST.__getitem__('x22')
 		a.x23=request.POST.__getitem__('x23')
 		a.x24=request.POST.__getitem__('x24')
+		a.date = request.POST.__getitem__('date')
 		n = [a.x0,a.x1,a.x2,a.x3,a.x4,a.x5,a.x6,a.x7,a.x8,a.x9,a.x10,a.x11,a.x12,a.x13,a.x14,a.x15,a.x16,a.x17,a.x18,a.x19,a.x20,a.x21,a.x22,a.x23,a.x24]
 		ar = []
 		for nn in n:
 			ar.append(float(nn));
-		#temp = 0;
-		#for nn in n:
-		#	temp = temp+float(nn);
-		#a.média = str(temp/25)
 		a.media = str(np.mean(ar))
 		a.sigma = str(np.std(ar))
 		a.save()

@@ -2,14 +2,17 @@
 
 {% load static %}
 
+<img src="{% static 'graphs/2.png' %}" alt="My image">
+
 {% block content %}
 
 <p>Gráficos Gerados: </p>
 <ul>
 	{% for graphic in graphics %}
 		<li>
-			<p>{{ Graphic.date_added|date:'M d, Y H:i' }}</p>
-			 <img src="{{Graphic.img.url}}">
+			{{graphic.img.year}}
+			<p>{{ graphic.date_added|date:'M d, Y H:i' }}</p>
+			<img src="{% static graphic.img.url %}">
 		</li>
 	{% empty %}
 		<li>
