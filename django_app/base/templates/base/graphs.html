@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<p>Gráficos Gerados: </p>
+<ul>
+	{% for graphic in graphics %}
+		<li>
+			<p>{{ Graphic.date_added|date:'M d, Y H:i' }}</p>
+			 <img src="{{Graphic.img.url}}">
+		</li>
+	{% empty %}
+		<li>
+			There are no graphics yet.
+		</li>
+	{% endfor %}
+</ul>
+{% endblock content %}

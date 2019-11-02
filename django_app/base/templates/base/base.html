@@ -1,0 +1,29 @@
+{% load static %}
+
+<!doctype html>
+<html lang='pt-BR'>
+    <head>
+        <meta charset="UTF-8">
+        <title>CEP Temp/Umi</title>
+    </head>
+	<body id="bd-home">
+        <div id="site">
+            <div id="cabecalho" class="grupo">
+                <p>
+                    <a href="{% url 'base:index' %}">Homepage</a>
+                    <a href="{% url 'base:new_graph' %}">New Graphic</a>
+                    <a href="{% url 'base:graphs' %}">Graphics</a>
+    
+                    {% if user.is_authenticated %}
+                        <span> &nbsp; &nbsp; Hello {{ user.username }} </span>
+                        <a href="{% url 'users:logout' %}">Logout</a>
+                    {% else %}
+                        <a href="{% url 'users:login' %}">Login</a>
+                    {% endif %}
+                </p>
+            </div> <!-- fim cabecalho -->
+        </div> <!-- fim site -->
+    </body>
+</html>
+
+{% block content %}{% endblock content %}

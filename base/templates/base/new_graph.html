@@ -1,9 +1,0 @@
-{% extends "base/base.html" %}
-{% block content %}
-	<p>Adicione o nome do gráfico e o periodo das amostras:</p>
-	<form action="{% url 'new_graph' %}" method='post'>
-		{% csrf_token %}
-		{{ form.as_p }}
-		<button name="submit">Gerar</button>
-	</form>
-{% endblock content %}

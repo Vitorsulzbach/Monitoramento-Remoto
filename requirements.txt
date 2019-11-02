@@ -1,0 +1,5 @@
+Django
+numpy
+matplotlib
+scipy
+Pillow
