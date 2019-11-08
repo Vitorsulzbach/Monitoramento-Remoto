@@ -29,8 +29,6 @@ services:
     volumes:    ["./postdb/database:/var/lib/postgresql/data"]
     ports:      ["5432"]
     networks:   ["django_net"]
-    logging:
-      driver: none
 
   pgadmin:
     container_name: pgadmin_container

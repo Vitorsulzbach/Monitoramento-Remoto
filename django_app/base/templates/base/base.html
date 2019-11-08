@@ -2,31 +2,38 @@
 
 <!doctype html>
 <html lang='pt-BR'>
-    <head>
-        <meta charset="UTF-8">
-        <title>CEP Temp/Umi</title>
-    </head>
-	<body id="bd-home">
-        <div id="site">
-            <div id="cabecalho" class="grupo">
-                <p>
-                    <a href="{% url 'base:index' %}">Homepage</a>
-                    <a href="{% url 'base:new_graph' %}">New Graphic</a>
-                    <a href="{% url 'base:graphs' %}">Graphics</a>
-    
-                    {% if user.is_authenticated %}
-                        <span> &nbsp; &nbsp; Hello {{ user.username }} </span>
-                        <a href="{% url 'users:logout' %}">Logout</a>
-                    {% else %}
-                        <a href="{% url 'users:login' %}">Login</a>
-                    {% endif %}
-                </p>
-            </div> <!-- fim cabecalho -->
-
-            {% block content %}{% endblock content %}
-
-        </div> <!-- fim site -->
-    </body>
+	<head>
+		<meta charset="UTF-8">
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="type="image/png""/>
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png"/>
+		{% block head %}{% endblock head %}
+		<link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+		<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+	</head>
+	<body class = "body">
+		<div class="page-header">
+			<div class="logo">
+				<a href="{% url 'base:index' %}">
+				<img src="{% static 'img/logo.png' %}" alt="My image">
+				</a>
+			</div>
+			<div class="left">
+				<li><a href="{% url 'base:index' %}">Homepage</a></li>
+				<li><a href="{% url 'base:new_graph' %}">New Graphic</a></li>
+				<li><a href="{% url 'base:graphs' %}">Graphics</a></li>
+			</div>
+			<div class="right">
+				{% if user.is_authenticated %}
+					<div id=hello><li>Hello, {{ user.username }}!</li></div>
+					<div id=logout><li><a href="{% url 'users:logout' %}">Logout</a></li></div>
+				{% else %}
+					<li><a href="{% url 'users:login' %}">Login</a></li>
+					<li><a href="{% url 'users:register' %}">Register</a></li>
+				{% endif %}
+			</div>
+		</div> <!-- end header -->
+		<div class="content">
+		{% block content %}{% endblock content %}
+		</div> <!-- end content -->
+	</body>
 </html>
-
-

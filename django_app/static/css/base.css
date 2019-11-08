@@ -1,0 +1,85 @@
+.page-header {
+  background-color: #000099;
+  padding: 0% 0% 8.5%;
+}
+
+.page-header li {
+  display: inline;
+}
+
+.page-header .left li {
+  padding-right: 2%;
+}
+
+.page-header .right li {
+  padding-right: 6%;
+}
+
+.body {
+  background-color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  background-color: #f2f2f2;
+  padding: 5% 10% 10%;
+  margin: 0% 10% 0%;
+}
+
+a {
+  text-decoration: none;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2vw;
+}
+
+.page-header a:link {
+  color: #ffffff;
+}
+
+.page-header a:visited {
+  color: #ffffff;
+}
+
+.page-header a:hover {
+  color: #b3b3ff;
+}
+
+.page-header .left {
+  float: left;
+  width: 68%;
+  transform: translate(5%,140%);
+}
+
+.page-header .right {
+  float: left;
+  width: 20%;
+  transform: translateY(+140%);
+}
+
+.page-header .logo {
+  float: left;
+  width: 10%;
+  top: 0%;
+}
+
+.logo img {
+  max-width: 100%;
+  height: auto;
+  transform: translateY(-10%);
+}
+
+.right #hello {
+  float: left;
+  font-family: 'Quicksand', sans-serif;
+  color: #ffffff;
+  width: 45%;
+  font-size: 1vw;
+  overflow-wrap: break-word;
+  transform: translateY(70%);
+}
+
+.right #lougout {
+  float: right;
+  width: 50%;
+}

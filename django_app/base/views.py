@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
-from .forms import graphicForm
+from .forms import graphicForm, graphicForm2
 from .models import graphic, amostra
 import graphgenerator
 import datetime
@@ -11,6 +11,7 @@ from django.db import models
 import numpy as np
 from django.utils.dateparse import parse_datetime
 import pytz
+from django.contrib.auth.decorators import login_required
 
 #ex time:'2019-06-15 22:52:34.810649'
 
@@ -53,6 +54,7 @@ def index(request):
 		a.save()
 	return render(request, 'base/index.html')
 
+@login_required
 def new_graph(request):
 	if(request.method == 'POST'):
 		form = graphicForm(request.POST)
@@ -73,11 +75,11 @@ def new_graph(request):
 			new_graph.save()
 			return HttpResponseRedirect(reverse('base:graphs'))
 	else:
-        	form= graphicForm()
+        	form = graphicForm()
 	context= {'form': form}
 	return render(request, 'base/new_graph.html',context)
 
-
+@login_required
 def graphs(request):
 	graphics = graphic.objects.order_by('-date_added')
 	context = {'graphics':graphics}

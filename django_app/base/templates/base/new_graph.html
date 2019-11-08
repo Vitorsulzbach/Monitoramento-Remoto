@@ -1,10 +1,14 @@
 {% extends "base/base.html" %}
+
+{% block head %}
+ <title>CEP - New Graphic</title>
+{% endblock head %}
+
 {% block content %}
-<p>Adicione o nome do gráfico e o periodo das amostras:</p>
+<p>Add the name of the graphic and the period of the samples:</p>
 <form action="{% url 'base:new_graph' %}" method='post'>
 	{% csrf_token %}
 	{{ form.as_p }}
 	<button name="submit">Gerar</button>
 </form>
-
 {% endblock content %}

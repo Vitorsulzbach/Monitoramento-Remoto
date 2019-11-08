@@ -1,11 +1,21 @@
 {% extends "base/base.html" %}
 
+{% block head %}
+ <title>CEP - Login</title>
+{% endblock head %}
+
 {% block content %}
 
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
-
+{% if next %}
+	{% if user.is_authenticated %}
+		<p>Unfortunately you don't have enough privileges to be here. Would you like to login to a different account?</p>
+	{% else %}
+		<p>You need to be logged to enter here.</p>
+    {% endif %}
+{% endif %}
 <form method="post" action="{% url 'users:login' %}">
 {% csrf_token %}
 {{ form.as_p }}
