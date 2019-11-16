@@ -19,8 +19,11 @@
 			</div>
 			<div class="left">
 				<li><a href="{% url 'base:index' %}">Homepage</a></li>
-				<li><a href="{% url 'base:new_graph' %}">New Graphic</a></li>
-				<li><a href="{% url 'base:graphs' %}">Graphics</a></li>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'base:new_graph' %}">New Graphic</a></li>
+					<li><a href="{% url 'base:graphs' %}">Graphics</a></li>
+				{% else %}
+				{% endif %}
 			</div>
 			<div class="right">
 				{% if user.is_authenticated %}

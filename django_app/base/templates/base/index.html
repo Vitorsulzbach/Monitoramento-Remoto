@@ -5,10 +5,14 @@
 {% endblock head %}
 
 {% block content %}
-    <p>Statistical process control of Temperature and humidity of a server room.</p>
-    <p>Dev accounts:</p>
-    <p>Username1: teste1</p>
-    <p>Username2: bigbigbigbigbignametest</p>
-    <p>Password: justtest</p>
+    {% if user.is_authenticated %}
+		<p>Statistical process control of Temperature and humidity of a server room.</p>
+	{% else %}
+    	<p> Please proceed to login page if you want to see or make graphics </p>
+		<p>Dev accounts:</p>
+		<p>Username1: teste1</p>
+		<p>Username2: bigbigbigbigbignametest</p>
+		<p>Password: justtest</p>
+	{% endif %}
     
 {% endblock content %}

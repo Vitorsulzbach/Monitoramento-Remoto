@@ -1,7 +1,7 @@
 from django.db import models
 
 class amostra(models.Model):
-	date = models.DateTimeField(auto_now_add=False)
+	date = models.DateTimeField(auto_now_add=True)
 	x0 = models.CharField(max_length=25)
 	x1 = models.CharField(max_length=25)
 	x2 = models.CharField(max_length=25)
@@ -30,7 +30,7 @@ class amostra(models.Model):
 	media = models.CharField(max_length=25)
 	sigma = models.CharField(max_length=25)
 	def __str__(self):
-		return self.media
+		return str(self.date)
 
 class graphic(models.Model):
 	date_added = models.DateTimeField(auto_now_add=True)
