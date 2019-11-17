@@ -1,6 +1,38 @@
 from django.db import models
 
-class amostra(models.Model):
+class temperature(models.Model):
+	date = models.DateTimeField(auto_now_add=True)
+	x0 = models.CharField(max_length=25)
+	x1 = models.CharField(max_length=25)
+	x2 = models.CharField(max_length=25)
+	x3 = models.CharField(max_length=25)
+	x4 = models.CharField(max_length=25)
+	x5 = models.CharField(max_length=25)
+	x6 = models.CharField(max_length=25)
+	x7 = models.CharField(max_length=25)
+	x8 = models.CharField(max_length=25)
+	x9 = models.CharField(max_length=25)
+	x10 = models.CharField(max_length=25)
+	x11 = models.CharField(max_length=25)
+	x12 = models.CharField(max_length=25)
+	x13 = models.CharField(max_length=25)
+	x14 = models.CharField(max_length=25)
+	x15 = models.CharField(max_length=25)
+	x16 = models.CharField(max_length=25)
+	x17 = models.CharField(max_length=25)
+	x18 = models.CharField(max_length=25)
+	x19 = models.CharField(max_length=25)
+	x20 = models.CharField(max_length=25)
+	x21 = models.CharField(max_length=25)
+	x22 = models.CharField(max_length=25)
+	x23 = models.CharField(max_length=25)
+	x24 = models.CharField(max_length=25)
+	media = models.CharField(max_length=25)
+	sigma = models.CharField(max_length=25)
+	def __str__(self):
+		return str(self.date)
+
+class humidity(models.Model):
 	date = models.DateTimeField(auto_now_add=True)
 	x0 = models.CharField(max_length=25)
 	x1 = models.CharField(max_length=25)

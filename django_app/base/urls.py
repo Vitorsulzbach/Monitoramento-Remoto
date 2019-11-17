@@ -10,4 +10,6 @@ urlpatterns = [
 	path('', views.index, name='index'),
 	path('new_graph/', views.new_graph, name='new_graph'),
 	path('graphs/', views.graphs, name='graphs'),
+	path('entrytemperature/', views.entrytemperature, name='entrytemperature'),
+	path('entryhumidity/', views.entryhumidity, name='entryhumidity'),
 ]

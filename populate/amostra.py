@@ -4,15 +4,16 @@ import datetime
 import signal, os
 import time
 import pytz
+import time
 
 num = 0
 
-n = 1;
+n = 0;
 
 IP_populate = ""
 
 if(n==0):
-	IP_populate = "http://0.0.0.0:8000/"
+	IP_populate = "http://0.0.0.0:8000/entrytemperature/"
 else:
 	IP_populate = "http://34.95.193.169:8000/"
 
@@ -26,5 +27,6 @@ while(1):
         print("Deu ruim no request!")
     num = num + 1
     print(str(num)+" ciclo!")
+    time.sleep(1)
 
 datetime.timedelta(minutes = 10)
