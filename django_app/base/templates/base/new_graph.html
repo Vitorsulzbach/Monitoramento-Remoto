@@ -6,9 +6,18 @@
 
 {% block content %}
 <p>Add the name of the graphic and the period of the samples:</p>
-<form action="{% url 'base:new_graph' %}" method='post'>
-	{% csrf_token %}
 	{{ form.as_p }}
+<form action="{% url 'base:new_graph' %}" method='post'>
+	<input type="radio" name="tipo" value="humidity" checked> Humidity<br>
+	<input type="radio" name="tipo" value="temperature"> Temperature<br><br>
+	<p>Data Inicial:</p>
+	<input type="datetime-local" id="date1"
+       name="date1" value = "2019-12-10T08:30">
+	{% csrf_token %}
+	<p>Data Final:</p>
+	<input type="datetime-local" id="date2"
+       name="date2" value = "2019-12-10T08:30"><br><br>
 	<button name="submit">Gerar</button>
 </form>
+<p>{{ menssage }}</p>
 {% endblock content %}

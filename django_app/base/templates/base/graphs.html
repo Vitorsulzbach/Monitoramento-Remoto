@@ -10,12 +10,43 @@
 
 {% block content %}
 
-<p>Gráficos Gerados: </p>
+<p>Generated Graphics </p>
 <ul>
 	{% for graphic in graphics %}
 		<li>
-			{{graphic.img.year}}
-			<p>{{ graphic.date_added|date:'M d, Y H:i' }}</p>
+			<table >
+				<tr>
+					<th>
+						{% if graphic.tipo %}
+							<p>Temperature Graphic</p>
+						{% else %}
+							<p>Humidity Graphic</p>
+						{% endif %}
+					</th>
+				</tr>
+				<tr>
+					<td>Generated in</td>
+					<td>{{ graphic.date_added|date:'M d, Y H:i' }}</td>
+				</tr>
+			  	<tr>
+			    		<td>Initial Date</td>
+			    		<td>{{ graphic.date1|date:'M d, Y H:i' }}</td>
+			  	</tr>
+			  	<tr>
+			    		<td>Final date</td>
+			    		<td>{{ graphic.date2|date:'M d, Y H:i' }}</td>
+			  	</tr>
+			</table>
+			{% if graphic.tipo %}
+				<p>Temperature Graphic</p>
+			{% else %}
+				<p>Humidity Graphic</p>
+			{% endif %}
+			<p>Generated in {{ graphic.date_added|date:'M d, Y H:i' }}</p>
+			<p>Graphic Interval: {{ graphic.date1|date:'M d, Y H:i' }} to {{ graphic.date2|date:'M d, Y H:i' }}</p>
+			<p>Process capability(PC): {{ graphic.cp }}</p>
+			<p>Process capability(PCK): {{ graphic.cpk }}</p>
+			<p>Defects per million(DPM): {{ graphic.dpm }}</p>
 			<img src="{% static graphic.img.url %}">
 		</li>
 	{% empty %}

@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
-from .forms import graphicForm, graphicForm2
 from .models import graphic, humidity, temperature
-import graphgenerator
+import graph
 import datetime
-import tes
 from django.views.decorators.csrf import csrf_exempt
 from django.db import models
 import numpy as np
@@ -14,8 +12,15 @@ import pytz
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
+import dateutil.parser
 
 #ex time:'2019-06-15 22:52:34.810649'
+
+class tes:
+	def __init__(self, b,st,x):
+		self.b = b
+		self.st = st
+		self.x = x
 
 def index(request):
 	return render(request, 'base/index.html')
@@ -23,27 +28,52 @@ def index(request):
 @login_required
 def new_graph(request):
 	if(request.method == 'POST'):
-		form = graphicForm(request.POST)
-		if(form.is_valid()):
-			new_graph = form.save(commit=False)
-			date1 = new_graph.year+"-"+new_graph.month+"-"+new_graph.day+" "+new_graph.hour+":"+new_graph.minu+":00.000000"
-			date2 = new_graph.year1+"-"+new_graph.month1+"-"+new_graph.day1+" "+new_graph.hour1+":"+new_graph.minu1+":00.000000"
-			a = amostra.objects.filter(date__range=[date1,date2])
-			n=len(a)
-			b = [tes.tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(n)]
-			b.sort(key=lambda nn: nn.x)
-			st = [b[i].st for i in range(len(b))]
-			x = [b[i].x for i in range(len(b))]
-			b = [b[i].b for i in range(len(b))]
-			new_graph.save()
-			graphgenerator.gerargra(b,st,x,new_graph.id)
-			new_graph.img='graphs/'+str(new_graph.id)+'.png'
-			new_graph.save()
-			return HttpResponseRedirect(reverse('base:graphs'))
-	else:
-        	form = graphicForm()
-	context= {'form': form}
-	return render(request, 'base/new_graph.html',context)
+		# ~ form = graphicForm(request.POST)
+		# ~ if(form.is_valid()):
+		print(request.POST)
+		date1 = str(dateutil.parser.parse(request.POST.__getitem__('date1')))+".000000"
+		date2 = str(dateutil.parser.parse(request.POST.__getitem__('date2')))+".000000"
+		new_graph = graphic()
+		# ~ new_graph = form.save(commit=False)
+		# ~ date1 = new_graph.year+"-"+new_graph.month+"-"+new_graph.day+" "+new_graph.hour+":"+new_graph.minu+":00.000000"
+		# ~ date2 = new_graph.year1+"-"+new_graph.month1+"-"+new_graph.day1+" "+new_graph.hour1+":"+new_graph.minu1+":00.000000"
+		if(request.POST.__getitem__('tipo')=='temperature'):
+			a = temperature.objects.filter(date__range=[date1,date2])
+		else:
+			a = humidity.objects.filter(date__range=[date1,date2])
+		if(len(a)==0):
+			context={'menssage':'No samples found in between the specified dates'}
+			return render(request, 'base/new_graph.html', context)
+		# ~ a = humidity.objects.filter(date__range=[str(dateutil.parser.parse(date1)),str(dateutil.parser.parse(date2))])
+		print(date1)
+		print(date2)
+		print(a)
+		b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
+		b.sort(key=lambda nn: nn.x)
+		st = [b[i].st for i in range(len(b))]
+		x = [b[i].x for i in range(len(b))]
+		b = [b[i].b for i in range(len(b))]
+		new_graph.date1 = date1
+		new_graph.date2 = date2
+		new_graph.save()
+		g = graph.Graph(b,st,x,new_graph.id)
+		if(request.POST.__getitem__('tipo')=='temperature'):
+			new_graph.tipo = True
+		new_graph.img='graphs/'+str(new_graph.id)+'.png'
+		new_graph.cp = g.CP
+		new_graph.cpk = g.CPK
+		new_graph.dpm = g.DPM
+		new_graph.rule1m = g.rule1HM
+		new_graph.rule2m = g.rule2HM
+		new_graph.rule3m = g.rule3HM
+		new_graph.rule4m = g.rule4HM
+		new_graph.rule1s = g.rule1HS
+		new_graph.rule2s = g.rule1HS
+		new_graph.rule3s = g.rule1HS
+		new_graph.rule4s = g.rule1HS
+		new_graph.save()
+		return HttpResponseRedirect(reverse('base:graphs'))
+	return render(request, 'base/new_graph.html')
 
 @login_required
 def graphs(request):
