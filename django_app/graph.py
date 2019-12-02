@@ -12,7 +12,7 @@ class Graph:
 	LSE = 0.6
 	LIE = -0.6
 	LSCs = 1.436160911
-	LICs = -0.563839089
+	LICs = 0.563839089
 	LSEs = 0.6
 	LIEs = -0.6
 	LC = 0
@@ -20,8 +20,8 @@ class Graph:
 	c4 = 0.9896
 	qtdReadings = 25
 	sigmaS = (LCs/c4)*np.sqrt((1-np.square(c4)))
-	LSCs = LCs+3*sigmaS
-	LICs = LCs-3*sigmaS
+	#LSCs = LCs+3*sigmaS
+	#LICs = LCs-3*sigmaS
 	
 	def __init__(self, samples, stndr, date, idd):
 		self.samples = samples #amostras
@@ -147,7 +147,7 @@ class Graph:
 					self.rule4HS = True
 			if(self.size > 4):
 				for k in range(5):
-					if((ii3[k]>self.LSC*3)|(ii3[k]<self.LIC*3)):
+					if((ii3[k]>self.LSCs*3)|(ii3[k]<self.LICs*3)):
 						i3=i3+1
 					if(i3>3):
 						iii3.append(i)
@@ -155,18 +155,18 @@ class Graph:
 				i3=0
 			if(self.size > 2):
 				for k in range(3):
-					if((ii2[k]>self.LSC*(2/3)))|(ii2[k]<self.LIC*(2/3)):
+					if((ii2[k]>self.LSCs*(2/3)))|(ii2[k]<self.LICs*(2/3)):
 						i2=i2+1
 					if(i2>1):
 						iii2.append(i)
 						self.rule2HS = True
 				i2 = 0
-			if((self.stndr[i]>self.LSC)|(self.stndr[i]<self.LIC)):
+			if((self.stndr[i]>self.LSCs)|(self.stndr[i]<self.LICs)):
 				ii1.append(i)
 				self.rule1HS = True
 
 	def geraGraficoHumidity(self):
-		fig, (ax1,ax2) = plt.subplots(2,1, sharey=False, figsize=(9,12))
+		fig, (ax1,ax2) = plt.subplots(2,1, sharey=False, figsize=(9,9))
 		fig.subplots_adjust(left=0.07, bottom=0.1, right=0.8, top=0.98, wspace=0.95, hspace=0.3)
 		plt.sca(ax1)
 		plt.xticks(rotation=30)
@@ -190,5 +190,5 @@ class Graph:
 
 		plt.xticks(rotation=30)
 		plt.legend(bbox_to_anchor=(1.015 ,0.98))
-		plt.savefig(('./static/graphs/'+str(self.idd)+'.png'))
+		plt.savefig(('./static/graphs/'+str(self.idd)+'.png'), transparent=True)
 

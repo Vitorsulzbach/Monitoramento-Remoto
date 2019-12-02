@@ -5,54 +5,139 @@
 <img src="{% static 'graphs/2.png' %}" alt="My image">
 
 {% block head %}
+<link rel="stylesheet" href="{% static 'css/graphs.css' %}"/>
  <title>CEP - Graphics</title>
 {% endblock head %}
 
 {% block content %}
-
-<p>Generated Graphics </p>
-<ul>
 	{% for graphic in graphics %}
-		<li>
-			<table >
-				<tr>
-					<th>
-						{% if graphic.tipo %}
-							<p>Temperature Graphic</p>
+		<div class="graphic">
+			<div style="overflow-x:auto;">
+				<table class="tables">
+					<tr>
+						<th colspan="2" id = "title">
+							{% if graphic.tipo %}
+								<p>Temperature Graphic</p>
+							{% else %}
+								<p>Humidity Graphic</p>
+							{% endif %}
+						</th>
+					</tr>
+					<tr>
+						<th>Generated in</th>
+						<td>{{ graphic.date_added|date:'M d, Y H:i' }}</td>
+					</tr>
+				  	<tr>
+				    		<th>Initial Date</th>
+				    		<td>{{ graphic.date1|date:'M d, Y H:i' }}</td>
+				  	</tr>
+				  	<tr>
+				    		<th>Final date</th>
+				    		<td>{{ graphic.date2|date:'M d, Y H:i' }}</td>
+				  	</tr>
+				  	<tr>
+				    		<th>Process capability(PC)</th>
+				    		<td>{{ graphic.cp }}</td>
+				  	</tr>
+				  	<tr>
+				    		<th>Process capability(PCK)</th>
+				   		<td>{{ graphic.cpk }}</td>
+				 	</tr>
+					<tr>
+				    		<th>Defects per million(DPM)</th>
+				    		<td>{{ graphic.dpm }}</td>
+				  	</tr>
+				</table>
+			</div>
+			<br>
+			<br>
+			<div style="overflow-x:auto;">
+				<table class="tables">
+					<tr>
+						<th colspan="3" id = "title">Regras de Controle</th>
+					</tr>
+					<tr>
+						<th id = "title"></th>
+						<th id = "title">Média</th>
+						<th id = "title">Desvio Padrão</th>
+					</tr>
+					<tr>
+						<th>Regra 1</th>
+						<td>
+						{% if graphic.rule1m %}
+							Fora de controle
 						{% else %}
-							<p>Humidity Graphic</p>
+							Em controle
 						{% endif %}
-					</th>
-				</tr>
-				<tr>
-					<td>Generated in</td>
-					<td>{{ graphic.date_added|date:'M d, Y H:i' }}</td>
-				</tr>
-			  	<tr>
-			    		<td>Initial Date</td>
-			    		<td>{{ graphic.date1|date:'M d, Y H:i' }}</td>
-			  	</tr>
-			  	<tr>
-			    		<td>Final date</td>
-			    		<td>{{ graphic.date2|date:'M d, Y H:i' }}</td>
-			  	</tr>
-			</table>
-			{% if graphic.tipo %}
-				<p>Temperature Graphic</p>
-			{% else %}
-				<p>Humidity Graphic</p>
-			{% endif %}
-			<p>Generated in {{ graphic.date_added|date:'M d, Y H:i' }}</p>
-			<p>Graphic Interval: {{ graphic.date1|date:'M d, Y H:i' }} to {{ graphic.date2|date:'M d, Y H:i' }}</p>
-			<p>Process capability(PC): {{ graphic.cp }}</p>
-			<p>Process capability(PCK): {{ graphic.cpk }}</p>
-			<p>Defects per million(DPM): {{ graphic.dpm }}</p>
+						</td>
+						<td>
+						{% if graphic.rule1s %}
+							Fora de controle
+						{% else %}
+							Em controle
+						{% endif %}
+						</td>
+					</tr>
+				  	<tr>
+						<th>Regra 2</th>
+						<td>
+						{% if graphic.rule2m %}
+							Fora de controle
+						{% else %}
+							Em controle
+						{% endif %}
+						</td>
+						<td>
+						{% if graphic.rule2s %}
+							Fora de controle
+						{% else %}
+							Em controle
+						{% endif %}
+						</td>
+				  	</tr>
+				  	<tr>
+						<th>Regra 3</th>
+						<td>
+						{% if graphic.rule3m %}
+							Fora de controle
+						{% else %}
+							Em controle
+						{% endif %}
+						</td>
+						<td>
+						{% if graphic.rule3s %}
+							Fora de controle
+						{% else %}
+							Em controle
+						{% endif %}
+						</td>
+				  	</tr>
+				  	<tr>
+						<th>Regra 4</th>
+						<td>
+						{% if graphic.rule4m %}
+							Fora de controle
+						{% else %}
+							Em controle
+						{% endif %}
+						</td>
+						<td>
+						{% if graphic.rule4s %}
+							Fora de controle
+						{% else %}
+							Em controle
+						{% endif %}
+						</td>
+				  	</tr>
+				</table>
+			</div>
+			<br>
+			<br>
 			<img src="{% static graphic.img.url %}">
-		</li>
+		</div>
+		<br>
+		<br>
 	{% empty %}
-		<li>
-			There are no graphics yet.
-		</li>
+		There are no graphics yet.
 	{% endfor %}
-</ul>
 {% endblock content %}
