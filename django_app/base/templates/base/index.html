@@ -1,10 +1,12 @@
 {% extends "base/base.html" %}
-
+{% load static %}
 {% block head %}
  <title>CEP - Homepage</title>
+<link rel="stylesheet" href="{% static 'css/graphs.css' %}"/>
 {% endblock head %}
 
 {% block content %}
+<div class="graphic">
     {% if user.is_authenticated %}
 		<p>Statistical process control of Temperature and humidity of a server room.</p>
 	{% else %}
@@ -14,5 +16,5 @@
 		<p>Username2: bigbigbigbigbignametest</p>
 		<p>Password: justtest</p>
 	{% endif %}
-    
+</div>
 {% endblock content %}

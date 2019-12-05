@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
-from .models import graphic, humidity, temperature
+from .models import graphic, humidity, temperature, globalvar, longgraphic
 import graph
 import datetime
 from django.views.decorators.csrf import csrf_exempt
@@ -13,8 +13,17 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 import dateutil.parser
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import user_passes_test
 
 #ex time:'2019-06-15 22:52:34.810649'
+
+#def staff_required(login_url=None):
+#    return user_passes_test(u.is_staff)
+
+def staff_check(user):
+    return user.is_staff
 
 class tes:
 	def __init__(self, b,st,x):
@@ -24,6 +33,156 @@ class tes:
 
 def index(request):
 	return render(request, 'base/index.html')
+
+def longGraphic(request):
+	new_graph = longgraphic.objects.get(tipo=False)
+	a = humidity.objects.all()
+	b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
+	b.sort(key=lambda nn: nn.x)
+	st = [b[i].st for i in range(len(b))]
+	x = [b[i].x for i in range(len(b))]
+	b = [b[i].b for i in range(len(b))]
+	g = graph.Graph(b,st,x,"humidity", float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
+	g.geraGrafico()
+	new_graph.img='graphs/humidity.png'
+	new_graph.cp = g.CP
+	new_graph.cpk = g.CPK
+	new_graph.dpm = g.DPM
+	new_graph.LC = round(g.LC,4)
+	new_graph.LSC = round(g.LSC,4)
+	new_graph.LIC = round(g.LIC,4)
+	new_graph.LCs = round(g.LCs,4)
+	new_graph.LSCs = round(g.LSCs,4)
+	new_graph.LICs = round(g.LICs,4)
+	new_graph.LSE = round(g.LSE,4)
+	new_graph.LIE = round(g.LIE,4)
+	new_graph.rule1m = g.rule1HM
+	new_graph.rule2m = g.rule2HM
+	new_graph.rule3m = g.rule3HM
+	new_graph.rule4m = g.rule4HM
+	new_graph.rule1s = g.rule1HS
+	new_graph.rule2s = g.rule1HS
+	new_graph.rule3s = g.rule1HS
+	new_graph.rule4s = g.rule1HS
+	new_graph.save()
+	
+	
+	new_graph = longgraphic.objects.get(tipo=True)
+	a = temperature.objects.all()
+	b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
+	b.sort(key=lambda nn: nn.x)
+	st = [b[i].st for i in range(len(b))]
+	x = [b[i].x for i in range(len(b))]
+	b = [b[i].b for i in range(len(b))]
+	g = graph.Graph(b,st,x,"temperature", float(globalvar.objects.get(name="LCt").value),float(globalvar.objects.get(name="LSCt").value),float(globalvar.objects.get(name="LICt").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCst").value),float(globalvar.objects.get(name="LSCst").value),float(globalvar.objects.get(name="LICst").value))
+	g.geraGrafico()
+	new_graph.img='graphs/temperature.png'
+	new_graph.cp = g.CP
+	new_graph.cpk = g.CPK
+	new_graph.dpm = g.DPM
+	new_graph.LC = round(g.LC,4)
+	new_graph.LSC = round(g.LSC,4)
+	new_graph.LIC = round(g.LIC,4)
+	new_graph.LCs = round(g.LCs,4)
+	new_graph.LSCs = round(g.LSCs,4)
+	new_graph.LICs = round(g.LICs,4)
+	new_graph.LSE = round(g.LSE,4)
+	new_graph.LIE = round(g.LIE,4)
+	new_graph.rule1m = g.rule1HM
+	new_graph.rule2m = g.rule2HM
+	new_graph.rule3m = g.rule3HM
+	new_graph.rule4m = g.rule4HM
+	new_graph.rule1s = g.rule1HS
+	new_graph.rule2s = g.rule1HS
+	new_graph.rule3s = g.rule1HS
+	new_graph.rule4s = g.rule1HS
+	new_graph.save()
+	
+	
+	longGraphics = longgraphic.objects.order_by('tipo')
+	context = {'graphics':longGraphics}
+	return render(request, 'base/long.html', context)
+
+@user_passes_test(staff_check)
+def recalculate(request):
+	context = {	'LCt':globalvar.objects.get(name="LCt").value,
+			'LSCt':globalvar.objects.get(name="LSCt").value,
+			'LICt':globalvar.objects.get(name="LICt").value,
+			'LCst':globalvar.objects.get(name="LCst").value,
+			'LSCst':globalvar.objects.get(name="LSCst").value,
+			'LICst':globalvar.objects.get(name="LICst").value,
+			'LSEt':globalvar.objects.get(name="LSEt").value,
+			'LIEt':globalvar.objects.get(name="LIEt").value,
+			'LCh':globalvar.objects.get(name="LCh").value,
+			'LSCh':globalvar.objects.get(name="LSCh").value,
+			'LICh':globalvar.objects.get(name="LICh").value,
+			'LCsh':globalvar.objects.get(name="LCsh").value,
+			'LSCsh':globalvar.objects.get(name="LSCsh").value,
+			'LICsh':globalvar.objects.get(name="LICsh").value,
+			'LSEh':globalvar.objects.get(name="LSEh").value,
+			'LIEh':globalvar.objects.get(name="LIEh").value
+	}
+	if(request.method == 'POST'):
+		print(request.POST)
+		date1 = str(dateutil.parser.parse(request.POST.__getitem__('date1')))+".000000"
+		date2 = str(dateutil.parser.parse(request.POST.__getitem__('date2')))+".000000"
+		if(request.POST.__getitem__('tipo')=='temperature'):
+			a = temperature.objects.filter(date__range=[date1,date2])
+		else:
+			a = humidity.objects.filter(date__range=[date1,date2])
+		if(len(a)==0):
+			context['menssage'] = 'No samples found in between the specified dates'
+			return render(request, 'base/recalculate.html', context)
+		print(date1)
+		print(date2)
+		print(a)
+		b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
+		b.sort(key=lambda nn: nn.x)
+		st = [b[i].st for i in range(len(b))]
+		x = [b[i].x for i in range(len(b))]
+		b = [b[i].b for i in range(len(b))]
+		g = graph.Graph(b,st,x,0)
+		g.recalculaLCs()
+		if(request.POST.__getitem__('tipo')=='temperature'):
+			LC = globalvar.objects.get(name="LCt")
+			LC.value = round(g.LC,4)
+			LC.save()
+			LSC = globalvar.objects.get(name="LSCt")
+			LSC.value = round(g.LSC,4)
+			LSC.save()
+			LIC = globalvar.objects.get(name="LICt")
+			LIC.value = round(g.LIC,4)
+			LIC.save()
+			LCs = globalvar.objects.get(name="LCst")
+			LCs.value = round(g.LCs,4)
+			LCs.save()
+			LSCs = globalvar.objects.get(name="LSCst")
+			LSCs.value = round(g.LSCs,4)
+			LSCs.save()
+			LICs = globalvar.objects.get(name="LICst")
+			LICs.value = round(g.LICs,4)
+			LICs.save()
+		else:
+			LC = globalvar.objects.get(name="LCh")
+			LC.value = round(g.LC,4)
+			LC.save()
+			LSC = globalvar.objects.get(name="LSCh")
+			LSC.value = round(g.LSC,4)
+			LSC.save()
+			LIC = globalvar.objects.get(name="LICh")
+			LIC.value = round(g.LIC,4)
+			LIC.save()
+			LCs = globalvar.objects.get(name="LCsh")
+			LCs.value = round(g.LCs,4)
+			LCs.save()
+			LSCs = globalvar.objects.get(name="LSCsh")
+			LSCs.value = round(g.LSCs,4)
+			LSCs.save()
+			LICs = globalvar.objects.get(name="LICsh")
+			LICs.value = round(g.LICs,4)
+			LICs.save()
+		return render(request, 'base/recalculate.html', context)
+	return render(request, 'base/recalculate.html', context)
 
 @login_required
 def new_graph(request):
@@ -56,13 +215,26 @@ def new_graph(request):
 		new_graph.date1 = date1
 		new_graph.date2 = date2
 		new_graph.save()
-		g = graph.Graph(b,st,x,new_graph.id)
+		
+		if(request.POST.__getitem__('tipo')=='temperature'):
+			g = graph.Graph(b,st,x,new_graph.id, float(globalvar.objects.get(name="LCt").value),float(globalvar.objects.get(name="LSCt").value),float(globalvar.objects.get(name="LICt").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCst").value),float(globalvar.objects.get(name="LSCst").value),float(globalvar.objects.get(name="LICst").value))
+		else:
+			g = graph.Graph(b,st,x,new_graph.id, float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
+		g.geraGrafico()
 		if(request.POST.__getitem__('tipo')=='temperature'):
 			new_graph.tipo = True
 		new_graph.img='graphs/'+str(new_graph.id)+'.png'
 		new_graph.cp = g.CP
 		new_graph.cpk = g.CPK
 		new_graph.dpm = g.DPM
+		new_graph.LC = round(g.LC,4)
+		new_graph.LSC = round(g.LSC,4)
+		new_graph.LIC = round(g.LIC,4)
+		new_graph.LCs = round(g.LCs,4)
+		new_graph.LSCs = round(g.LSCs,4)
+		new_graph.LICs = round(g.LICs,4)
+		new_graph.LSE = round(g.LSE,4)
+		new_graph.LIE = round(g.LIE,4)
 		new_graph.rule1m = g.rule1HM
 		new_graph.rule2m = g.rule2HM
 		new_graph.rule3m = g.rule3HM

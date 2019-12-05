@@ -1,22 +1,25 @@
 {% extends "base/base.html" %}
-
+{% load static %}
 {% block head %}
- <title>CEP - New Graphic</title>
+<title>CEP - New Graphic</title>
+<link rel="stylesheet" href="{% static 'css/graphs.css' %}"/>
 {% endblock head %}
 
 {% block content %}
-<p>Add the name of the graphic and the period of the samples:</p>
-<form action="{% url 'base:new_graph' %}" method='post'>
-	<input type="radio" name="tipo" value="humidity" checked> Humidity<br>
-	<input type="radio" name="tipo" value="temperature"> Temperature<br><br>
-	<p>Initial date:</p>
-	<input type="datetime-local" id="date1"
-       name="date1" value = "2019-12-10T08:30">
-	{% csrf_token %}
-	<p>Final date:</p>
-	<input type="datetime-local" id="date2"
-       name="date2" value = "2019-12-10T08:30"><br><br>
-	<button name="submit">Generate</button>
-</form>
-<p>{{ menssage }}</p>
+<div class = graphic>
+	<p>Add the name of the graphic and the period of the samples:</p>
+	<form action="{% url 'base:new_graph' %}" method='post'>
+		<input type="radio" name="tipo" value="humidity" checked> Humidity<br>
+		<input type="radio" name="tipo" value="temperature"> Temperature<br><br>
+		<p>Initial date:</p>
+		<input type="datetime-local" id="date1"
+	       name="date1" value = "2019-12-10T08:30">
+		{% csrf_token %}
+		<p>Final date:</p>
+		<input type="datetime-local" id="date2"
+	       name="date2" value = "2019-12-10T08:30"><br><br>
+		<button name="submit">Generate</button>
+	</form>
+	<p>{{ menssage }}</p>
+</div>
 {% endblock content %}

@@ -7,27 +7,22 @@ import pytz
 import scipy.stats as sts
 
 class Graph:
-	LSC = 0.6
-	LIC = -0.6
-	LSE = 0.6
-	LIE = -0.6
-	LSCs = 1.436160911
-	LICs = 0.563839089
-	LSEs = 0.6
-	LIEs = -0.6
-	LC = 0
-	LCs = 1
 	c4 = 0.9896
 	qtdReadings = 25
-	sigmaS = (LCs/c4)*np.sqrt((1-np.square(c4)))
-	#LSCs = LCs+3*sigmaS
-	#LICs = LCs-3*sigmaS
 	
-	def __init__(self, samples, stndr, date, idd):
+	def __init__(self, samples, stndr, date, idd, LC, LSC, LIC, LSE, LIE, LCs, LSCs, LICs):
 		self.samples = samples #amostras
 		self.stndr = stndr #desvio
 		self.date = date #data
 		self.idd = idd #name
+		self.LC = LC
+		self.LSC = LSC
+		self.LIC = LIC
+		self.LSE = LSE
+		self.LIE = LIE
+		self.LCs = LCs
+		self.LSCs = LSCs
+		self.LICs = LICs
 		self.calculaSize()
 		if(self.size>0):
 			self.date1 = date[0]
@@ -41,7 +36,6 @@ class Graph:
 		self.calculaDPM()
 		self.catchRulesM()
 		self.catchRulesS()
-		self.geraGraficoHumidity()
 	
 	def calculaSize(self):
 		self.size = len(self.samples)
@@ -165,7 +159,7 @@ class Graph:
 				ii1.append(i)
 				self.rule1HS = True
 
-	def geraGraficoHumidity(self):
+	def geraGrafico(self):
 		fig, (ax1,ax2) = plt.subplots(2,1, sharey=False, figsize=(9,9))
 		fig.subplots_adjust(left=0.07, bottom=0.1, right=0.8, top=0.98, wspace=0.95, hspace=0.3)
 		plt.sca(ax1)
@@ -191,4 +185,15 @@ class Graph:
 		plt.xticks(rotation=30)
 		plt.legend(bbox_to_anchor=(1.015 ,0.98))
 		plt.savefig(('./static/graphs/'+str(self.idd)+'.png'), transparent=True)
+
+	def recalculaLCs(self):
+		self.LCs = np.mean(self.stndr)
+		self.LC = np.mean(self.samples)
+		self.sigmaS = (self.LCs/self.c4)*np.sqrt((1-np.square(self.c4)))
+		self.LSCs = self.LCs+3*self.sigmaS
+		self.LICs = self.LCs-3*self.sigmaS
+		self.LSC = self.LC+3*(self.LCs/np.sqrt(self.qtdReadings))
+		self.LIC = self.LC-3*(self.LCs/np.sqrt(self.qtdReadings))
+		
+		
 

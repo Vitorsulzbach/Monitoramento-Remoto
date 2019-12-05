@@ -73,6 +73,14 @@ class graphic(models.Model):
 	cp = models.CharField(max_length=25)
 	cpk = models.CharField(max_length=25)
 	dpm = models.CharField(max_length=25)
+	LC = models.CharField(max_length=25)
+	LSC = models.CharField(max_length=25)
+	LIC = models.CharField(max_length=25)
+	LCs = models.CharField(max_length=25)
+	LSCs = models.CharField(max_length=25)
+	LICs = models.CharField(max_length=25)
+	LSE = models.CharField(max_length=25)
+	LIE = models.CharField(max_length=25)
 	rule1m = models.BooleanField(default=False)
 	rule2m = models.BooleanField(default=False)
 	rule3m = models.BooleanField(default=False)
@@ -83,3 +91,35 @@ class graphic(models.Model):
 	rule4s = models.BooleanField(default=False)
 	def __str__(self):
 		return str(self.date_added)
+
+class globalvar(models.Model):
+	name = models.CharField(max_length=25)
+	value = models.CharField(max_length=25)
+	def __str__(self):
+		return str(self.name)
+
+class longgraphic(models.Model):
+	tipo = models.BooleanField(default=False) #False = Humidity // True = Temperature
+	img = models.ImageField(upload_to='static/graphs/', blank=True)
+	cp = models.CharField(max_length=25)
+	cpk = models.CharField(max_length=25)
+	dpm = models.CharField(max_length=25)
+	LC = models.CharField(max_length=25)
+	LSC = models.CharField(max_length=25)
+	LIC = models.CharField(max_length=25)
+	LCs = models.CharField(max_length=25)
+	LSCs = models.CharField(max_length=25)
+	LICs = models.CharField(max_length=25)
+	LSE = models.CharField(max_length=25)
+	LIE = models.CharField(max_length=25)
+	rule1m = models.BooleanField(default=False)
+	rule2m = models.BooleanField(default=False)
+	rule3m = models.BooleanField(default=False)
+	rule4m = models.BooleanField(default=False)
+	rule1s = models.BooleanField(default=False)
+	rule2s = models.BooleanField(default=False)
+	rule3s = models.BooleanField(default=False)
+	rule4s = models.BooleanField(default=False)
+	def __str__(self):
+		return str(self.cp)
+

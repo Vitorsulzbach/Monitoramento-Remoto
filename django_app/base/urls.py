@@ -12,4 +12,6 @@ urlpatterns = [
 	path('graphs/', views.graphs, name='graphs'),
 	path('entrytemperature/', views.entrytemperature, name='entrytemperature'),
 	path('entryhumidity/', views.entryhumidity, name='entryhumidity'),
+	path('calibrate/', views.recalculate, name='recalculate'),
+	path('longgraphic/', views.longGraphic, name='longGraphic'),
 ]
