@@ -141,7 +141,10 @@ def recalculate(request):
 		st = [b[i].st for i in range(len(b))]
 		x = [b[i].x for i in range(len(b))]
 		b = [b[i].b for i in range(len(b))]
-		g = graph.Graph(b,st,x,0)
+		if(request.POST.__getitem__('tipo')=='temperature'):
+			g = graph.Graph(b,st,x,"a", float(globalvar.objects.get(name="LCt").value),float(globalvar.objects.get(name="LSCt").value),float(globalvar.objects.get(name="LICt").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCst").value),float(globalvar.objects.get(name="LSCst").value),float(globalvar.objects.get(name="LICst").value))
+		else:
+			g = graph.Graph(b,st,x,"q", float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
 		g.recalculaLCs()
 		if(request.POST.__getitem__('tipo')=='temperature'):
 			LC = globalvar.objects.get(name="LCt")
