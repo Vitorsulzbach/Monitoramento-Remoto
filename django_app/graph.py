@@ -192,8 +192,8 @@ class Graph:
 		self.sigmaS = (self.LCs/self.c4)*np.sqrt((1-np.square(self.c4)))
 		self.LSCs = self.LCs+3*self.sigmaS
 		self.LICs = self.LCs-3*self.sigmaS
-		self.LSC = self.LC+3*(self.LCs/np.sqrt(self.qtdReadings))
-		self.LIC = self.LC-3*(self.LCs/np.sqrt(self.qtdReadings))
+		self.LSC = self.LC+3*(np.std(self.samples))
+		self.LIC = self.LC-3*(np.std(self.samples))
 		
 		
 
