@@ -51,8 +51,8 @@ class Graph:
 		
 	def calculaCPK(self):
 		self.CPK = round((self.LSE-np.mean(self.samples))/self.LSC,4)
-		if(self.CPK>round((np.mean(self.samples)-self.LIE)/(-self.LIC),4)):
-			self.CPK=round((np.mean(self.samples)-self.LIE)/(-self.LIC),4)
+		if(self.CPK>round((np.mean(self.samples)-self.LIE)/np.absolute(self.LIC),4)):
+			self.CPK=round((np.mean(self.samples)-self.LIE)/np.absolute(self.LIC),4)
 
 	def calculaDPM(self):
 		self.DPM = round((1-(sts.norm.cdf((self.LSC-np.mean(self.samples))/self.sigmaCP)-(sts.norm.cdf((self.LIC-np.mean(self.samples))/self.sigmaCP))))*1000000,2)
