@@ -42,7 +42,7 @@ def longGraphic(request):
 	st = [b[i].st for i in range(len(b))]
 	x = [b[i].x for i in range(len(b))]
 	b = [b[i].b for i in range(len(b))]
-	g = graph.Graph(b,st,x,"humidity", float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
+	g = graph.Graph(b,st,x,"humidity", float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEh").value),float(globalvar.objects.get(name="LIEh").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
 	g.geraGrafico()
 	new_graph.img='graphs/humidity.png'
 	new_graph.cp = g.CP
@@ -292,10 +292,6 @@ def entrytemperature(request):
 			ar.append(float(nn));
 		a.media = str(np.mean(ar))
 		a.sigma = str(np.std(ar))
-		#try:
-		a.date=request.POST.__getitem__('date')
-		#except:
-		#	print("oi")
 		a.save()
 		return HttpResponse(status=200);
 	else:
@@ -330,7 +326,6 @@ def entryhumidity(request):
 		a.x22=request.POST.__getitem__('x22')
 		a.x23=request.POST.__getitem__('x23')
 		a.x24=request.POST.__getitem__('x24')
-		a.date=request.POST.__getitem__('date')
 		n = [a.x0,a.x1,a.x2,a.x3,a.x4,a.x5,a.x6,a.x7,a.x8,a.x9,a.x10,a.x11,a.x12,a.x13,a.x14,a.x15,a.x16,a.x17,a.x18,a.x19,a.x20,a.x21,a.x22,a.x23,a.x24]
 		ar = []
 		for nn in n:
