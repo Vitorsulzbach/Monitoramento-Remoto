@@ -44,15 +44,15 @@ class Graph:
 		self.mediaStndr = np.mean(self.stndr)
 		
 	def calculaSigmaCP(self):
-		self.sigmaCP =  (self.LSC-self.LC)/3
+		self.sigmaCP =  np.absolute((self.LSC-self.LC)/3)
 	
 	def calculaCP(self):
-		self.CP = x = round((self.LSE-self.LIE)/(6*self.sigmaCP), 4)
+	        self.CP = round((self.LSE-self.LIE)/(6*self.sigmaCP), 4)
 		
 	def calculaCPK(self):
-		self.CPK = round((self.LSE-np.mean(self.samples))/self.LSC,4)
-		if(self.CPK>round((np.mean(self.samples)-self.LIE)/np.absolute(self.LIC),4)):
-			self.CPK=round((np.mean(self.samples)-self.LIE)/np.absolute(self.LIC),4)
+                self.CPK = round(np.absolute(self.LSE-np.mean(self.samples))/(3*self.sigmaCP),4)
+                if(self.CPK>round(np.absolute(np.mean(self.samples)-self.LIE)/(3*self.sigmaCP),4)):
+                         self.CPK=round(np.absolute(np.mean(self.samples)-self.LIE)/(3*self.sigmaCP),4)
 
 	def calculaDPM(self):
 		self.DPM = round((1-(sts.norm.cdf((self.LSC-np.mean(self.samples))/self.sigmaCP)-(sts.norm.cdf((self.LIC-np.mean(self.samples))/self.sigmaCP))))*1000000,2)

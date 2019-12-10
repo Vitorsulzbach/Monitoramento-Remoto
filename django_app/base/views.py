@@ -222,7 +222,7 @@ def new_graph(request):
 		if(request.POST.__getitem__('tipo')=='temperature'):
 			g = graph.Graph(b,st,x,new_graph.id, float(globalvar.objects.get(name="LCt").value),float(globalvar.objects.get(name="LSCt").value),float(globalvar.objects.get(name="LICt").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCst").value),float(globalvar.objects.get(name="LSCst").value),float(globalvar.objects.get(name="LICst").value))
 		else:
-			g = graph.Graph(b,st,x,new_graph.id, float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
+                    g = graph.Graph(b,st,x,new_graph.id, float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEh").value),float(globalvar.objects.get(name="LIEh").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
 		g.geraGrafico()
 		if(request.POST.__getitem__('tipo')=='temperature'):
 			new_graph.tipo = True

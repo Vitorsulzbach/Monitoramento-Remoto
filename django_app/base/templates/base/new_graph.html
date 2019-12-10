@@ -13,11 +13,11 @@
 		<input type="radio" name="tipo" value="temperature"> Temperature<br><br>
 		<p>Initial date:</p>
 		<input type="datetime-local" id="date1"
-	       name="date1" value = "2019-12-10T08:30">
+	       name="date1" value = "2019-12-12T08:30">
 		{% csrf_token %}
 		<p>Final date:</p>
 		<input type="datetime-local" id="date2"
-	       name="date2" value = "2019-12-10T08:30"><br><br>
+	       name="date2" value = "2019-12-12T08:30"><br><br>
 		<button name="submit">Generate</button>
 	</form>
 	<p>{{ menssage }}</p>
