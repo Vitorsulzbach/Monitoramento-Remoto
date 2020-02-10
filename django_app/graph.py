@@ -44,7 +44,7 @@ class Graph:
 		self.mediaStndr = np.mean(self.stndr)
 		
 	def calculaSigmaCP(self):
-		self.sigmaCP =  np.absolute((self.LSC-self.LC)/3)
+                self.sigmaCP =  np.std(self.samples)
 	
 	def calculaCP(self):
 	        self.CP = round((self.LSE-self.LIE)/(6*self.sigmaCP), 4)

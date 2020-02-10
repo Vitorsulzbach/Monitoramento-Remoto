@@ -34,6 +34,7 @@ class tes:
 def index(request):
 	return render(request, 'base/index.html')
 
+@login_required
 def longGraphic(request):
 	new_graph = longgraphic.objects.get(tipo=False)
 	a = humidity.objects.all()
