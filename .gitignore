@@ -4,10 +4,12 @@ django_app/base/__pycache__
 django_app/base/migrations
 django_app/base/.views.py.swo
 django_app/base/templates/base/.long.html.swp
-django_app/base/_init__.py
+django_app/base/__init__.py
 django_app/django_app/__init__.py
 django_app/django_app/__pycache__
 django_app/static/graphs/*
 django_app/users/__pycache__
 django_app/users/__init__.py
 django_app/users/migrations
+django_app/populate/__pycache__/
+django_app/populate/__initi__.py
