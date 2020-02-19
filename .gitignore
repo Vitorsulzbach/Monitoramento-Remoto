@@ -12,4 +12,4 @@ django_app/users/__pycache__
 django_app/users/__init__.py
 django_app/users/migrations
 django_app/populate/__pycache__/
-django_app/populate/__initi__.py
+django_app/populate/__init__.py

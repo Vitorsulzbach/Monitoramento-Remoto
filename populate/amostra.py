@@ -8,14 +8,13 @@ import time
 
 num = 0
 
-n = 0;
-
+n = 0
 IP_populate = ""
 
 if(n==0):
 	IP_populate = "http://0.0.0.0:8000/entryhumidity/"
 else:
-	IP_populate = "http://34.95.193.169:8000/"
+	IP_populate = "http://34.95.165.121:8000/"
 
 
 while(1):
