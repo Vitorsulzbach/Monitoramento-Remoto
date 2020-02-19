@@ -28,7 +28,9 @@ class Graph:
 			self.date1 = date[0]
 			self.date2 = date[self.size-1]
 		else:
-			return
+			
+			self.date1 = "2020-02-19 13:06:39.141"
+			self.date2 = "2020-03-19 13:07:39.141"
 		self.calculaMediaStndr()
 		self.calculaSigmaCP()
 		self.calculaCP()

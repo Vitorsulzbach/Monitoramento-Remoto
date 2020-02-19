@@ -36,93 +36,101 @@ def index(request):
 
 @login_required
 def longGraphic(request):
-	new_graph = longgraphic.objects.get(tipo=False)
-	a = humidity.objects.all()
-	b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
-	b.sort(key=lambda nn: nn.x)
-	st = [b[i].st for i in range(len(b))]
-	x = [b[i].x for i in range(len(b))]
-	b = [b[i].b for i in range(len(b))]
-	g = graph.Graph(b,st,x,"humidity", float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEh").value),float(globalvar.objects.get(name="LIEh").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
-	g.geraGrafico()
-	new_graph.img='graphs/humidity.png'
-	new_graph.cp = g.CP
-	new_graph.cpk = g.CPK
-	new_graph.dpm = g.DPM
-	new_graph.LC = round(g.LC,4)
-	new_graph.LSC = round(g.LSC,4)
-	new_graph.LIC = round(g.LIC,4)
-	new_graph.LCs = round(g.LCs,4)
-	new_graph.LSCs = round(g.LSCs,4)
-	new_graph.LICs = round(g.LICs,4)
-	new_graph.LSE = round(g.LSE,4)
-	new_graph.LIE = round(g.LIE,4)
-	new_graph.rule1m = g.rule1HM
-	new_graph.rule2m = g.rule2HM
-	new_graph.rule3m = g.rule3HM
-	new_graph.rule4m = g.rule4HM
-	new_graph.rule1s = g.rule1HS
-	new_graph.rule2s = g.rule1HS
-	new_graph.rule3s = g.rule1HS
-	new_graph.rule4s = g.rule1HS
-	new_graph.save()
-	
-	
-	new_graph = longgraphic.objects.get(tipo=True)
-	a = temperature.objects.all()
-	b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
-	b.sort(key=lambda nn: nn.x)
-	st = [b[i].st for i in range(len(b))]
-	x = [b[i].x for i in range(len(b))]
-	b = [b[i].b for i in range(len(b))]
-	g = graph.Graph(b,st,x,"temperature", float(globalvar.objects.get(name="LCt").value),float(globalvar.objects.get(name="LSCt").value),float(globalvar.objects.get(name="LICt").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCst").value),float(globalvar.objects.get(name="LSCst").value),float(globalvar.objects.get(name="LICst").value))
-	g.geraGrafico()
-	new_graph.img='graphs/temperature.png'
-	new_graph.cp = g.CP
-	new_graph.cpk = g.CPK
-	new_graph.dpm = g.DPM
-	new_graph.LC = round(g.LC,4)
-	new_graph.LSC = round(g.LSC,4)
-	new_graph.LIC = round(g.LIC,4)
-	new_graph.LCs = round(g.LCs,4)
-	new_graph.LSCs = round(g.LSCs,4)
-	new_graph.LICs = round(g.LICs,4)
-	new_graph.LSE = round(g.LSE,4)
-	new_graph.LIE = round(g.LIE,4)
-	new_graph.rule1m = g.rule1HM
-	new_graph.rule2m = g.rule2HM
-	new_graph.rule3m = g.rule3HM
-	new_graph.rule4m = g.rule4HM
-	new_graph.rule1s = g.rule1HS
-	new_graph.rule2s = g.rule1HS
-	new_graph.rule3s = g.rule1HS
-	new_graph.rule4s = g.rule1HS
-	new_graph.save()
-	
-	
-	longGraphics = longgraphic.objects.order_by('tipo')
-	context = {'graphics':longGraphics}
+	try:
+		new_graph = longgraphic.objects.get(tipo=False)
+		a = humidity.objects.all()
+		b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
+		b.sort(key=lambda nn: nn.x)
+		st = [b[i].st for i in range(len(b))]
+		x = [b[i].x for i in range(len(b))]
+		b = [b[i].b for i in range(len(b))]
+		g = graph.Graph(b,st,x,"humidity", float(globalvar.objects.get(name="LCh").value),float(globalvar.objects.get(name="LSCh").value),float(globalvar.objects.get(name="LICh").value),float(globalvar.objects.get(name="LSEh").value),float(globalvar.objects.get(name="LIEh").value),float(globalvar.objects.get(name="LCsh").value),float(globalvar.objects.get(name="LSCsh").value),float(globalvar.objects.get(name="LICsh").value))
+		g.geraGrafico()
+		new_graph.img='graphs/humidity.png'
+		new_graph.cp = g.CP
+		new_graph.cpk = g.CPK
+		new_graph.dpm = g.DPM
+		new_graph.LC = round(g.LC,4)
+		new_graph.LSC = round(g.LSC,4)
+		new_graph.LIC = round(g.LIC,4)
+		new_graph.LCs = round(g.LCs,4)
+		new_graph.LSCs = round(g.LSCs,4)
+		new_graph.LICs = round(g.LICs,4)
+		new_graph.LSE = round(g.LSE,4)
+		new_graph.LIE = round(g.LIE,4)
+		new_graph.rule1m = g.rule1HM
+		new_graph.rule2m = g.rule2HM
+		new_graph.rule3m = g.rule3HM
+		new_graph.rule4m = g.rule4HM
+		new_graph.rule1s = g.rule1HS
+		new_graph.rule2s = g.rule1HS
+		new_graph.rule3s = g.rule1HS
+		new_graph.rule4s = g.rule1HS
+		new_graph.save()
+		
+		
+		new_graph = longgraphic.objects.get(tipo=True)
+		a = temperature.objects.all()
+		b = [tes(float(a[i].media),float(a[i].sigma),a[i].date) for i in range(len(a))]
+		b.sort(key=lambda nn: nn.x)
+		st = [b[i].st for i in range(len(b))]
+		x = [b[i].x for i in range(len(b))]
+		b = [b[i].b for i in range(len(b))]
+		g = graph.Graph(b,st,x,"temperature", float(globalvar.objects.get(name="LCt").value),float(globalvar.objects.get(name="LSCt").value),float(globalvar.objects.get(name="LICt").value),float(globalvar.objects.get(name="LSEt").value),float(globalvar.objects.get(name="LIEt").value),float(globalvar.objects.get(name="LCst").value),float(globalvar.objects.get(name="LSCst").value),float(globalvar.objects.get(name="LICst").value))
+		g.geraGrafico()
+		new_graph.img='graphs/temperature.png'
+		new_graph.cp = g.CP
+		new_graph.cpk = g.CPK
+		new_graph.dpm = g.DPM
+		new_graph.LC = round(g.LC,4)
+		new_graph.LSC = round(g.LSC,4)
+		new_graph.LIC = round(g.LIC,4)
+		new_graph.LCs = round(g.LCs,4)
+		new_graph.LSCs = round(g.LSCs,4)
+		new_graph.LICs = round(g.LICs,4)
+		new_graph.LSE = round(g.LSE,4)
+		new_graph.LIE = round(g.LIE,4)
+		new_graph.rule1m = g.rule1HM
+		new_graph.rule2m = g.rule2HM
+		new_graph.rule3m = g.rule3HM
+		new_graph.rule4m = g.rule4HM
+		new_graph.rule1s = g.rule1HS
+		new_graph.rule2s = g.rule1HS
+		new_graph.rule3s = g.rule1HS
+		new_graph.rule4s = g.rule1HS
+		new_graph.save()
+		
+		
+		longGraphics = longgraphic.objects.order_by('tipo')
+		context = {'graphics':longGraphics}
+	except:
+		context = {}
+
 	return render(request, 'base/long.html', context)
 
 @user_passes_test(staff_check)
 def recalculate(request):
-	context = {	'LCt':globalvar.objects.get(name="LCt").value,
-			'LSCt':globalvar.objects.get(name="LSCt").value,
-			'LICt':globalvar.objects.get(name="LICt").value,
-			'LCst':globalvar.objects.get(name="LCst").value,
-			'LSCst':globalvar.objects.get(name="LSCst").value,
-			'LICst':globalvar.objects.get(name="LICst").value,
-			'LSEt':globalvar.objects.get(name="LSEt").value,
-			'LIEt':globalvar.objects.get(name="LIEt").value,
-			'LCh':globalvar.objects.get(name="LCh").value,
-			'LSCh':globalvar.objects.get(name="LSCh").value,
-			'LICh':globalvar.objects.get(name="LICh").value,
-			'LCsh':globalvar.objects.get(name="LCsh").value,
-			'LSCsh':globalvar.objects.get(name="LSCsh").value,
-			'LICsh':globalvar.objects.get(name="LICsh").value,
-			'LSEh':globalvar.objects.get(name="LSEh").value,
-			'LIEh':globalvar.objects.get(name="LIEh").value
-	}
+	try:
+		context = {	'LCt':globalvar.objects.get(name="LCt").value,
+				'LSCt':globalvar.objects.get(name="LSCt").value,
+				'LICt':globalvar.objects.get(name="LICt").value,
+				'LCst':globalvar.objects.get(name="LCst").value,
+				'LSCst':globalvar.objects.get(name="LSCst").value,
+				'LICst':globalvar.objects.get(name="LICst").value,
+				'LSEt':globalvar.objects.get(name="LSEt").value,
+				'LIEt':globalvar.objects.get(name="LIEt").value,
+				'LCh':globalvar.objects.get(name="LCh").value,
+				'LSCh':globalvar.objects.get(name="LSCh").value,
+				'LICh':globalvar.objects.get(name="LICh").value,
+				'LCsh':globalvar.objects.get(name="LCsh").value,
+				'LSCsh':globalvar.objects.get(name="LSCsh").value,
+				'LICsh':globalvar.objects.get(name="LICsh").value,
+				'LSEh':globalvar.objects.get(name="LSEh").value,
+				'LIEh':globalvar.objects.get(name="LIEh").value
+		}
+	except:
+		context = {}
+	
 	if(request.method == 'POST'):
 		print(request.POST)
 		date1 = str(dateutil.parser.parse(request.POST.__getitem__('date1')))+".000000"
